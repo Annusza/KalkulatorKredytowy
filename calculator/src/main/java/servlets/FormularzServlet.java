@@ -19,22 +19,19 @@ public class FormularzServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		// response.setContentType("text/html;charset=UTF-8");
 		handleRequest(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		// response.setContentType("text/html;charset=UTF-8");
 		handleRequest(request, response);
 
 	}
 
-
 	public static void pisz(HttpServletResponse response, String string)
 			throws IOException {
 		response.getWriter().write(string);
-		
+
 	}
 
 	private void handleRequest(HttpServletRequest request,
@@ -44,7 +41,6 @@ public class FormularzServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.print("<html><head><meta charset=\"UTF-8\"></head><body><br/><br/>");
 
-
 		Double kwota = null;
 		Double raty = null;
 		Double oprocentowanie = null;
@@ -52,8 +48,10 @@ public class FormularzServlet extends HttpServlet {
 		try {
 			kwota = LogikaFormularza.wyciagnijDoubleZRequest(request, "kwota");
 			raty = LogikaFormularza.wyciagnijDoubleZRequest(request, "raty");
-			oprocentowanie = LogikaFormularza.wyciagnijDoubleZRequest(request, "oprocentowanie");
-			oplata = LogikaFormularza.wyciagnijDoubleZRequest(request, "oplata");
+			oprocentowanie = LogikaFormularza.wyciagnijDoubleZRequest(request,
+					"oprocentowanie");
+			oplata = LogikaFormularza
+					.wyciagnijDoubleZRequest(request, "oplata");
 
 		} catch (Exception e) {
 
@@ -67,8 +65,8 @@ public class FormularzServlet extends HttpServlet {
 				"<table border=\"2\"><tr><th>Nr raty</th><th>Kwota kapitału</th><th>Kwota odsetek</th><th>Opłaty stałe</th><th>Całkowita kwota raty</th></tr>");
 
 		boolean stala = request.getParameter("rodz_rat").equals("stala");
-		List<List<Double>> lista = LogikaFormularza.obliczRatyStale(kwota, raty, oprocentowanie,
-				oplata, stala);
+		List<List<Double>> lista = LogikaFormularza.obliczRatyStale(kwota,
+				raty, oprocentowanie, oplata, stala);
 		for (int i = 0; i < lista.size(); i++) {
 
 			pisz(response, "<tr>");
@@ -84,6 +82,5 @@ public class FormularzServlet extends HttpServlet {
 		}
 		pisz(response, "</table><br/></body></html>");
 	}
-
 
 }
